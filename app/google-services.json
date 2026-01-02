@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1055948454560",
+    "project_id": "heroku-app-7553c",
+    "storage_bucket": "heroku-app-7553c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055948454560:android:807f17cb4da6f7568f67c5",
+        "android_client_info": {
+          "package_name": "com.heroku_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTFVxZOKjNP_Ef9b2fBkYS8wgLbIt5kyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055948454560:android:27d199406301c0118f67c5",
+        "android_client_info": {
+          "package_name": "com.heroku_app.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTFVxZOKjNP_Ef9b2fBkYS8wgLbIt5kyc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.example.heroku_app.ui.theme
+package com.heroku_app.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

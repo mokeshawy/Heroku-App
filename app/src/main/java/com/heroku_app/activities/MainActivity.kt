@@ -1,4 +1,4 @@
-package com.example.heroku_app
+package com.heroku_app.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.heroku_app.ui.theme.HerokuAppTheme
+import com.heroku_app.ui.theme.HerokuAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

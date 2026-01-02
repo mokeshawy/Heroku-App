@@ -1,4 +1,4 @@
-package com.example.heroku_app.ui.theme
+package com.heroku_app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
