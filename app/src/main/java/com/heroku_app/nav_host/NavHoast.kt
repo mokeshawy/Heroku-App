@@ -4,9 +4,10 @@ package com.heroku_app.nav_host
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import kotlinx.serialization.Serializable
+import com.heroku_app.features.launches.presentation.graph.launchesGraph
 import com.heroku_app.features.splash_screen.graph.SplashScreen
 import com.heroku_app.features.splash_screen.graph.splashGraph
+import kotlinx.serialization.Serializable
 
 @Serializable
 data object RootGraph
@@ -22,5 +23,8 @@ fun RootNavHost() {
         route = RootGraph::class
     ) {
         splashGraph(navController = navController)
+
+        launchesGraph(navController = navController)
+
     }
 }
