@@ -23,7 +23,7 @@ fun SplashScreen(
         SubcomposeAsyncImageComponent(
             modifier = modifier.size(250.dp),
             imageUrl = R.drawable.ic_heroku_app,
-            errorPlaceholder = R.drawable.ic_heroku_app
+            errorPlaceholder = R.drawable.ic_vector_placeholder
         )
     }
 
