@@ -102,6 +102,13 @@ dependencies {
     api("com.squareup.retrofit2:converter-gson:$retrofit")
 
 
+    // ApolloGraphql
+    api("com.apollographql.apollo3:apollo-runtime:3.7.3")
+    api("com.apollographql.apollo3:apollo-api:3.7.3")
+
+    //Logging interceptor
+    api("com.squareup.okhttp3:logging-interceptor:4.9.2")
+
     // Crypto
     api("androidx.security:security-crypto:1.1.0-alpha06")
 
