@@ -6,6 +6,8 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.android")
     id("com.apollographql.apollo3").version("3.7.3")
+    id("com.google.firebase.crashlytics")
+    id("com.google.gms.google-services")
 
 }
 
@@ -17,6 +19,16 @@ apollo {
 }
 
 android {
+
+    signingConfigs {
+        create("release") {
+            keyAlias = "keyAlis"
+            keyPassword = "Mohamed**Keshawy"
+            storeFile = file("heroku-key-store.jks")
+            storePassword = "Mohamed**Keshawy"
+        }
+    }
+
     namespace = "com.heroku_app"
     compileSdk = 36
 
@@ -40,7 +52,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            //signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
