@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">Heroku-App</string>
+    <string name="app_name">Heroku App</string>
+    <string name="launches">Launches</string>
+    <string name="failed_to_load_more_data">Failed to load more data</string>
+    <string name="retry">Retry</string>
+    <string name="rocket">Rocket</string>
+    <string name="name">NAME:</string>
+    <string name="type">TYPE:</string>
+    <string name="id">ID:</string>
+    <string name="mission">MISSION</string>
+    <string name="site">SITE</string>
 </resources>
