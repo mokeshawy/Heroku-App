@@ -5,11 +5,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
@@ -36,13 +36,17 @@ fun AppTopAppBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun appBarColors() = TopAppBarDefaults.topAppBarColors(
-    containerColor = Color(0xFFFFFFFC),
-    scrolledContainerColor = Color(0xFFE6E6E3),
-    navigationIconContentColor = Color(0xFF000000),
-    titleContentColor = Color(0xFF000000),
-    actionIconContentColor = Color(0xFF000000)
-)
+fun appBarColors(): TopAppBarColors {
+    val colorScheme = MaterialTheme.colorScheme
+
+    return TopAppBarDefaults.topAppBarColors(
+        containerColor = colorScheme.surface,
+        scrolledContainerColor = colorScheme.surfaceVariant,
+        navigationIconContentColor = colorScheme.onSurface,
+        titleContentColor = colorScheme.onSurface,
+        actionIconContentColor = colorScheme.onSurface
+    )
+}
 
 @Composable
 fun TopAppBarTitle(title: String) {
