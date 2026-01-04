@@ -36,7 +36,7 @@ fun LaunchDetailsScreen(
 
     MainTopBar(
         title = R.string.app_name,
-        titleText = uiModel?.missionUiModel?.name,
+        titleText = "${uiModel?.missionUiModel?.name} (id:${uiModel?.id})",
         isPullRefresh = false,
         leftIcon = R.drawable.ic_arrow_back,
         onLeftIconClicked = onBackClicked,
