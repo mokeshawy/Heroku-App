@@ -3,6 +3,7 @@ package com.heroku_app.core.network.apollo_client
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient
 import com.heroku_app.core.network.base_url_config.NdkBaseUrlModule
+import com.pluto.plugins.network.interceptors.okhttp.PlutoOkhttpInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +36,7 @@ object ApolloClientModule {
         .readTimeout(2, TimeUnit.MINUTES)
         .addInterceptor(httpLoggingInterceptor)
         .addInterceptor(NetLoggingInterceptor())
+        .addInterceptor(PlutoOkhttpInterceptor)
         .build()
 
 
