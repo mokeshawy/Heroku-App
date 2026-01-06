@@ -27,3 +27,26 @@ class ResponseUnAuthorizedException(message: String? = null, cause: Throwable? =
 class BadRequestException(message: String? = null, cause: Throwable? = null) :
     AppErrorException(message, cause)
 
+
+@Keep
+class ApolloResponseException(message: String? = null, cause: Throwable? = null) :
+    AppErrorException(message, cause)
+
+
+
+@Keep
+class ApolloResponseUnAuthorizedException(message: String? = null, cause: Throwable? = null) :
+    AppErrorException(message, cause)
+
+
+
+@Keep
+class ApolloResponseNotFoundException(message: String? = null, cause: Throwable? = null) :
+    AppErrorException(message, cause)
+
+
+
+@Keep
+class ApolloHttpStatusCodeException(message: String? = null, cause: Throwable? = null) :
+    AppErrorException(message, cause)
+
