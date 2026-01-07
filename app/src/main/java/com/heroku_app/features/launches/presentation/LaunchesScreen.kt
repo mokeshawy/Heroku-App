@@ -29,10 +29,9 @@ import com.core.ui_component.main_top_bar.MainTopBar
 import com.core.ui_component.subcompose_async.SubcomposeAsyncImageComponent
 import com.core.ui_component.ui_extensions.noRippleClickable
 import com.heroku_app.R
-import com.heroku_app.features.common.viewmodel.MainViewModel
+import com.heroku_app.features.common.domain.model.ui.launches_ui.LaunchUiModel
 import com.heroku_app.features.composable.BottomLoadingIndicator
 import com.heroku_app.features.composable.PagingErrorItem
-import com.heroku_app.features.launches.domain.modle.ui.LaunchUiModel
 import com.heroku_app.features.launches.presentation.viewmodel.LaunchesViewModel
 import com.heroku_app.ui.theme.semiBold
 
@@ -40,8 +39,7 @@ import com.heroku_app.ui.theme.semiBold
 @Composable
 fun LaunchesScreen(
     viewModel: LaunchesViewModel = hiltViewModel(),
-    mainViewModel: MainViewModel,
-    onNavigateToLaunchesDetailsScreen: () -> Unit
+    onNavigateToLaunchesDetailsScreen: (id: String, missionName: String?) -> Unit
 ) {
 
     val launches = viewModel.uiStateFlow.collectAsStateWithLifecycle()
@@ -58,8 +56,9 @@ fun LaunchesScreen(
                 pagingData = pagingData,
                 onRetry = viewModel::refresh,
                 onItemClicked = { uiModel ->
-                    mainViewModel.setLaunchUiModel(launchUiModel = uiModel)
-                    onNavigateToLaunchesDetailsScreen()
+                    onNavigateToLaunchesDetailsScreen(
+                        uiModel.id, uiModel.missionUiModel?.name
+                    )
                 }
             )
         })

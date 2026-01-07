@@ -2,10 +2,8 @@ package com.heroku_app.nav_host
 
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.heroku_app.features.common.viewmodel.MainViewModel
 import com.heroku_app.features.launche_details.presentation.graph.launchDetailsGraph
 import com.heroku_app.features.launches.presentation.graph.launchesGraph
 import com.heroku_app.features.splash_screen.graph.SplashScreen
@@ -16,7 +14,7 @@ import kotlinx.serialization.Serializable
 data object RootGraph
 
 @Composable
-fun RootNavHost(viewModel: MainViewModel = hiltViewModel()) {
+fun RootNavHost() {
 
     val navController = rememberNavController()
 
@@ -27,15 +25,9 @@ fun RootNavHost(viewModel: MainViewModel = hiltViewModel()) {
     ) {
         splashGraph(navController = navController)
 
-        launchesGraph(
-            navController = navController,
-            mainViewModel = viewModel
-        )
+        launchesGraph(navController = navController)
 
-        launchDetailsGraph(
-            navController = navController,
-            mainViewModel = viewModel
-        )
+        launchDetailsGraph(navController = navController)
 
     }
 }

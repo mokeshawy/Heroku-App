@@ -9,4 +9,7 @@
     <string name="id">ID:</string>
     <string name="mission">MISSION</string>
     <string name="site">SITE</string>
+    <string name="launch_id_and_mission_name">%s (id:%s)</string>
+    <string name="something_went_wrong">something went wrong</string>
+    <string name="tap_to_load_content">Tap to load content</string>
 </resources>

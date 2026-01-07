@@ -1,4 +1,4 @@
-package com.heroku_app.features.launches.domain.modle.ui
+package com.heroku_app.features.common.domain.model.ui.launches_ui
 
 data class LaunchUiModel(
     val id: String,
