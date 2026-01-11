@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.core.bases.base_viewmodel.BaseViewModel
 import com.core.extensions.viewModelScope
+import com.heroku_app.features.common.domain.model.ui.launches_ui.LaunchUiModel
 import com.heroku_app.features.launches.domain.event.LaunchesIntent
 import com.heroku_app.features.launches.domain.modle.state.LaunchesPagingState
 import com.heroku_app.features.launches.domain.repository.LaunchesRepository
@@ -15,6 +16,8 @@ class LaunchesViewModel @Inject constructor(
     private val launchesRepository: LaunchesRepository
 ) : BaseViewModel<LaunchesIntent, LaunchesPagingState>(initialState = LaunchesPagingState()) {
 
+
+    val favorites get() = launchesRepository.getFavorites()
 
     init {
         sendLaunchesPagingIntent()
@@ -38,4 +41,8 @@ class LaunchesViewModel @Inject constructor(
             updateStateFlow { copy(launchPagingUiModel = launchesPagingData) }
         }
     }
+
+
+    fun toggleFavorite(launch: LaunchUiModel) = launchesRepository.toggleFavorite(launch = launch)
+
 }
