@@ -5,5 +5,6 @@ data class LaunchUiModel(
     val isBooked: Boolean,
     val missionUiModel: MissionUiModel?,
     val rocketUiModel: RocketUiModel?,
-    val site: String?
+    val site: String?,
+    var isFavorite: Boolean = false
 )

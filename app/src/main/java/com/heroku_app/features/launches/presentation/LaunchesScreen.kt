@@ -9,13 +9,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -42,8 +49,10 @@ fun LaunchesScreen(
     onNavigateToLaunchesDetailsScreen: (id: String, missionName: String?) -> Unit
 ) {
 
-    val launches = viewModel.uiStateFlow.collectAsStateWithLifecycle()
-    val pagingData = launches.value.launchPagingUiModel?.collectAsLazyPagingItems()
+    val launchesState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+    val pagingData = launchesState.launchPagingUiModel?.collectAsLazyPagingItems()
+
+    val favorites by viewModel.favorites.collectAsStateWithLifecycle()
 
     val isRefreshing = pagingData?.loadState?.refresh is LoadState.Loading
 
@@ -54,23 +63,27 @@ fun LaunchesScreen(
         content = {
             LaunchesContent(
                 pagingData = pagingData,
+                favorites = favorites,
                 onRetry = viewModel::refresh,
                 onItemClicked = { uiModel ->
                     onNavigateToLaunchesDetailsScreen(
                         uiModel.id, uiModel.missionUiModel?.name
                     )
-                }
+                },
+                onFavoriteToggle = { launch -> viewModel.toggleFavorite(launch) }
             )
-        })
-
+        }
+    )
 }
 
 
 @Composable
 fun LaunchesContent(
     pagingData: LazyPagingItems<LaunchUiModel>?,
+    favorites: List<LaunchUiModel>,
     onRetry: () -> Unit,
-    onItemClicked: (LaunchUiModel) -> Unit
+    onItemClicked: (LaunchUiModel) -> Unit,
+    onFavoriteToggle: (LaunchUiModel) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -78,14 +91,18 @@ fun LaunchesContent(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(count = pagingData?.itemCount ?: 0) { index ->
-            pagingData?.get(index)?.let {
-                LaunchItem(
-                    launchImage = it.missionUiModel?.missionPatch,
-                    rocketName = it.rocketUiModel?.name,
-                    missionName = it.missionUiModel?.name,
-                    onItemClicked = { onItemClicked(it) }
-                )
-            }
+            val item = pagingData?.get(index) ?: return@items
+
+            val isFavorite = favorites.any { it.id == item.id }
+
+            LaunchItem(
+                launchImage = item.missionUiModel?.missionPatch,
+                rocketName = item.rocketUiModel?.name,
+                missionName = item.missionUiModel?.name,
+                isFavorite = isFavorite,
+                onItemClicked = { onItemClicked(item) },
+                onFavoriteChange = { onFavoriteToggle(item) }
+            )
         }
 
         pagingData?.loadToFirstItem(onError = {
@@ -120,7 +137,9 @@ fun LaunchItem(
     launchImage: String?,
     rocketName: String?,
     missionName: String?,
-    onItemClicked: () -> Unit
+    isFavorite: Boolean,
+    onItemClicked: () -> Unit,
+    onFavoriteChange: (Boolean) -> Unit
 ) {
     Card(
         modifier = modifier
@@ -135,15 +154,18 @@ fun LaunchItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(all = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .padding(16.dp)
         ) {
             SubcomposeAsyncImageComponent(
                 modifier = modifier.size(50.dp),
                 imageUrl = launchImage,
                 errorPlaceholder = R.drawable.ic_vector_placeholder
             )
-            Column(modifier = modifier.padding(8.dp)) {
+            Column(
+                modifier = modifier
+                    .weight(2f)
+                    .padding(horizontal = 10.dp)
+            ) {
                 Text(
                     text = rocketName ?: "-",
                     fontSize = 16.sp,
@@ -154,7 +176,34 @@ fun LaunchItem(
                     fontSize = 16.sp,
                     style = MaterialTheme.typography.bodyLarge.semiBold
                 )
+
+                FavoriteButton(
+                    modifier = modifier.align(Alignment.End),
+                    isFavorite = isFavorite,
+                    onFavoriteChange = onFavoriteChange
+                )
             }
         }
     }
 }
+
+
+@Composable
+fun FavoriteButton(
+    modifier: Modifier = Modifier,
+    isFavorite: Boolean,
+    onFavoriteChange: (Boolean) -> Unit
+) {
+    IconButton(
+        modifier = modifier,
+        onClick = { onFavoriteChange(!isFavorite) }
+    ) {
+        Icon(
+            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+            contentDescription = "Favorite",
+            tint = if (isFavorite) Color.Red else Color.Gray
+        )
+    }
+}
+
+
