@@ -18,38 +18,58 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.core.ui_component.failure_view.FailureView
 import com.core.ui_component.main_top_bar.MainTopBar
 import com.core.ui_component.subcompose_async.SubcomposeAsyncImageComponent
 import com.heroku_app.R
-import com.heroku_app.features.common.viewmodel.MainViewModel
+import com.heroku_app.features.launche_details.presentation.viewmodel.LaunchDetailsViewModel
 import com.heroku_app.ui.theme.medium
 import com.heroku_app.ui.theme.semiBold
 
 
 @Composable
 fun LaunchDetailsScreen(
-    mainViewModel: MainViewModel,
+    viewModel: LaunchDetailsViewModel = hiltViewModel(),
     onBackClicked: () -> Unit
 ) {
 
-    val uiModel = mainViewModel.launchModel
-
+    val uiState = viewModel.uiStateFlow.collectAsStateWithLifecycle().value
+    val uiModel = uiState.launchUiModel
+    val missionName = viewModel.launchDetails.missionName ?: "-"
+    val launchId = viewModel.launchDetails.id
     MainTopBar(
         title = R.string.app_name,
-        titleText = "${uiModel?.missionUiModel?.name} (id:${uiModel?.id})",
-        isPullRefresh = false,
+        titleText = stringResource(R.string.launch_id_and_mission_name,missionName, launchId),
+        onRefresh = viewModel::refresh,
+        isRefreshing = uiState.isLoading,
         leftIcon = R.drawable.ic_arrow_back,
         onLeftIconClicked = onBackClicked,
         content = {
-            LaunchContent(
-                launchImage = uiModel?.missionUiModel?.missionPatch,
-                rocketName = uiModel?.rocketUiModel?.name,
-                rocketType = uiModel?.rocketUiModel?.type,
-                id = uiModel?.id,
-                missionName = uiModel?.missionUiModel?.name,
-                site = uiModel?.site
-            )
-        })
+
+            if (uiState.error == null && uiModel != null) {
+                LaunchContent(
+                    launchImage = uiModel.missionUiModel?.missionPatch,
+                    rocketName = uiModel.rocketUiModel?.name,
+                    rocketType = uiModel.rocketUiModel?.type,
+                    id = uiModel.id,
+                    missionName = uiModel.missionUiModel?.name,
+                    site = uiModel.site
+                )
+            }
+
+            if (uiState.error != null) {
+                val errorMessage = uiState.error.message
+                FailureView(
+                    errText = errorMessage ?: stringResource(R.string.something_went_wrong),
+                    tapText = R.string.tap_to_load_content,
+                    icon = R.drawable.ic_vector_error,
+                    onTapToRefresh = viewModel::refresh
+                )
+            }
+        }
+    )
 }
 
 @Composable
@@ -75,7 +95,8 @@ fun LaunchContent(
                 .fillMaxWidth()
                 .padding(all = 10.dp),
             imageUrl = launchImage,
-            errorPlaceholder = R.drawable.ic_vector_placeholder
+            errorPlaceholder = R.drawable.ic_vector_placeholder,
+            circularProgressPadding = 80.dp
         )
 
         Spacer(modifier = modifier.height(10.dp))
