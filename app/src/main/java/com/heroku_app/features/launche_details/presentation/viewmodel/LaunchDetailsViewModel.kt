@@ -25,7 +25,10 @@ class LaunchDetailsViewModel @Inject constructor(
         sendLaunchByIdIntent()
     }
 
-    fun refresh() = sendLaunchByIdIntent()
+    fun refresh() {
+        resetLaunchDetailsState()
+        sendLaunchByIdIntent()
+    }
 
     private fun sendLaunchByIdIntent() =
         sendIntent(LaunchDetailsIntent.LaunchById(id = launchDetails.id))
@@ -48,5 +51,9 @@ class LaunchDetailsViewModel @Inject constructor(
                 updateStateFlow { copy(isLoading = false, launchUiModel = uiModel) }
             }
         )
+    }
+
+    private fun resetLaunchDetailsState() = viewModelScope {
+        updateStateFlow { copy(isLoading = false, error = null, launchUiModel = null) }
     }
 }

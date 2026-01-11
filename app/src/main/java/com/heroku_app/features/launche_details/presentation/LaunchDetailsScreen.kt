@@ -48,7 +48,7 @@ fun LaunchDetailsScreen(
         onLeftIconClicked = onBackClicked,
         content = {
 
-            if (uiModel != null) {
+            if (uiState.error == null && uiModel != null) {
                 LaunchContent(
                     launchImage = uiModel.missionUiModel?.missionPatch,
                     rocketName = uiModel.rocketUiModel?.name,
