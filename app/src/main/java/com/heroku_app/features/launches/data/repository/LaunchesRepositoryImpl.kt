@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.apollographql.apollo3.ApolloClient
 import com.heroku_app.features.launches.data.paging_data_sorce.LaunchesPagingDataSource
-import com.heroku_app.features.launches.domain.modle.ui.LaunchUiModel
+import com.heroku_app.features.common.domain.model.ui.launches_ui.LaunchUiModel
 import com.heroku_app.features.launches.domain.repository.LaunchesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

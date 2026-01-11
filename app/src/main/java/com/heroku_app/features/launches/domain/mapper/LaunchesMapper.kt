@@ -3,10 +3,10 @@ package com.heroku_app.features.launches.domain.mapper
 import com.heroku_app.LaunchesQuery
 import com.heroku_app.LaunchesQuery.Launch
 
-import com.heroku_app.features.launches.domain.modle.ui.LaunchUiModel
-import com.heroku_app.features.launches.domain.modle.ui.LaunchesUiModel
-import com.heroku_app.features.launches.domain.modle.ui.MissionUiModel
-import com.heroku_app.features.launches.domain.modle.ui.RocketUiModel
+import com.heroku_app.features.common.domain.model.ui.launches_ui.LaunchUiModel
+import com.heroku_app.features.common.domain.model.ui.launches_ui.LaunchesUiModel
+import com.heroku_app.features.common.domain.model.ui.launches_ui.MissionUiModel
+import com.heroku_app.features.common.domain.model.ui.launches_ui.RocketUiModel
 
 
 fun LaunchesQuery.Launches.toLaunchesUiModel() = LaunchesUiModel(

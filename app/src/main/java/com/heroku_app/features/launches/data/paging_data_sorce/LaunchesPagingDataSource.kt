@@ -6,7 +6,7 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
 import com.heroku_app.LaunchesQuery
 import com.heroku_app.features.launches.domain.mapper.toLaunchesUiModel
-import com.heroku_app.features.launches.domain.modle.ui.LaunchUiModel
+import com.heroku_app.features.common.domain.model.ui.launches_ui.LaunchUiModel
 import javax.inject.Inject
 
 class LaunchesPagingDataSource @Inject constructor(private val apolloClient: ApolloClient) :
